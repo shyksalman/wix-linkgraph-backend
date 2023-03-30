@@ -839,7 +839,7 @@ class GetToken(APIView):
             )
             user_email = User.objects.filter(email=member_data['properties']['email'])
             if user_email.exists():
-                return Response(data={"message": f"This user email{user_email.first().email} is already registered"})
+                return Response(data={"message": f"This user email {user_email.first().email} is already registered"})
             user = User.objects.create(email=member_data['properties']['email'], token=rf_token,
                                        username=generate_unique_username([
                                            member_data['properties']['email'],
