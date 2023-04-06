@@ -794,7 +794,7 @@ class GetToken(APIView):
 
             response = requests.request("POST", url, headers=headers, data=payload)
             if response.status_code == 400:
-                return Response({"error": "Your token is Expired, Please request for new token",
+                return Response({"message": "Your token is Expired, Please request for new token",
                                  "code": status.HTTP_400_BAD_REQUEST})
             rf_token = response.json().get('refresh_token')
             url = "https://www.wixapis.com/oauth/access"
@@ -823,7 +823,7 @@ class GetToken(APIView):
 
             member_data = response.json()
             if "email" not in member_data.get("properties"):
-                return Response({"error": "Please Update your Business info or site properties Email",
+                return Response({"message": "Please Update your Business info or site properties Email",
                                  "code": status.HTTP_400_BAD_REQUEST})
 
             url = "https://api.searchatlas.com/api/customer/account/register/v2/"
@@ -859,5 +859,5 @@ class GetToken(APIView):
             if response.status_code == 201:
                 mail_registration(registration_response)
             return Response(registration_response)
-        return Response(data={"error": "No token found",
+        return Response(data={"message": "No token found",
                               "code": status.HTTP_400_BAD_REQUEST})
