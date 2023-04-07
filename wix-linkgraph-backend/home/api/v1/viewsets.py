@@ -57,6 +57,8 @@ class WixViewSet(WixAuthentication, APIView):
                             status=status.HTTP_400_BAD_REQUEST)
 
         response = WixAuthentication.get_wix_authentication(self, refresh_token=request.user.token)
+        if response.status == 400:
+            return Response(response.json().get('payload'), status=status.HTTP_400_BAD_REQUEST)
 
         new_token = response.json()
         payload = {}
@@ -77,6 +79,8 @@ class WixListPostViewSet(APIView, WixAuthentication):
 
     def get(self, request):
         response = WixAuthentication.get_wix_authentication(self, refresh_token=request.user.token)
+        if response.status == 400:
+            return Response(response.json().get('payload'), status=status.HTTP_400_BAD_REQUEST)
 
         new_token = response.json()
 
@@ -98,6 +102,8 @@ class WixListCreateCategoriesViewSet(APIView, WixAuthentication):
 
     def post(self, request):
         response = WixAuthentication.get_wix_authentication(self, refresh_token=request.user.token)
+        if response.status == 400:
+            return Response(response.json().get('payload'), status=status.HTTP_400_BAD_REQUEST)
         new_token = response.json()
 
         url = "https://www.wixapis.com/blog/v3/categories"
@@ -119,6 +125,8 @@ class WixListPostCategoriesViewSet(APIView, WixAuthentication):
 
     def post(self, request):
         response = WixAuthentication.get_wix_authentication(self, refresh_token=request.user.token)
+        if response.status == 400:
+            return Response(response.json().get('payload'), status=status.HTTP_400_BAD_REQUEST)
         new_token = response.json()
 
         url = "https://www.wixapis.com/blog/v3/categories/query"
@@ -142,6 +150,8 @@ class WixGetCategoriesViewSet(APIView, WixAuthentication):
 
     def get(self, request):
         response = WixAuthentication.get_wix_authentication(self, refresh_token=request.user.token)
+        if response.status == 400:
+            return Response(response.json().get('payload'), status=status.HTTP_400_BAD_REQUEST)
         new_token = response.json()
 
         # categoryId = "b968e421-8c4a-40f1-9786-87155d62ff19"
@@ -166,6 +176,8 @@ class WixListUpdateCategoriesViewSet(APIView, WixAuthentication):
 
     def patch(self, request):
         response = WixAuthentication.get_wix_authentication(self, refresh_token=request.user.token)
+        if response.status == 400:
+            return Response(response.json().get('payload'), status=status.HTTP_400_BAD_REQUEST)
 
         new_token = response.json()
         category = request.data.get('categoryid', '')
@@ -191,6 +203,8 @@ class WixGetCategoriesBySlugViewSet(APIView, WixAuthentication):
 
     def get(self, request):
         response = WixAuthentication.get_wix_authentication(self, refresh_token=request.user.token)
+        if response.status == 400:
+            return Response(response.json().get('payload'), status=status.HTTP_400_BAD_REQUEST)
         new_token = response.json()
 
         url = "https://www.wixapis.com/blog/v3/categories/slugs/{slug=test-category}"
@@ -213,6 +227,8 @@ class WixCreateDraftPostViewSet(APIView, WixAuthentication):
 
     def post(self, request):
         response = WixAuthentication.get_wix_authentication(self, refresh_token=request.user.token)
+        if response.status == 400:
+            return Response(response.json().get('payload'), status=status.HTTP_400_BAD_REQUEST)
         new_token = response.json()
         url = "https://www.wixapis.com/blog/v3/draft-posts"
 
@@ -234,6 +250,8 @@ class WixListDraftPostViewSet(APIView, WixAuthentication):
 
     def get(self, request):
         response = WixAuthentication.get_wix_authentication(self, refresh_token=request.user.token)
+        if response.status == 400:
+            return Response(response.json().get('payload'), status=status.HTTP_400_BAD_REQUEST)
         new_token = response.json()
         status = request.data.get('status', '')
         url = f"https://www.wixapis.com/blog/v3/draft-posts?status={status}"
@@ -256,6 +274,8 @@ class WixGetSiteBusinessViewSet(APIView, WixAuthentication):
 
     def get(self, request):
         response = WixAuthentication.get_wix_authentication(self, refresh_token=request.user.token)
+        if response.status == 400:
+            return Response(response.json().get('payload'), status=status.HTTP_400_BAD_REQUEST)
         new_token = response.json()
 
         url = "https://www.wixapis.com/site-properties/v4/properties"
@@ -277,6 +297,8 @@ class WixListMemberListViewSet(APIView, WixAuthentication):
 
     def get(self, request):
         response = WixAuthentication.get_wix_authentication(self, refresh_token=request.user.token)
+        if response.status == 400:
+            return Response(response.json().get('payload'), status=status.HTTP_400_BAD_REQUEST)
         new_token = response.json()
 
         url = "https://www.wixapis.com/members/v1/members"
@@ -297,6 +319,8 @@ class WixGetMemberListViewSet(APIView, WixAuthentication):
 
     def get(self, request):
         response = WixAuthentication.get_wix_authentication(self, refresh_token=request.user.token)
+        if response.status == 400:
+            return Response(response.json().get('payload'), status=status.HTTP_400_BAD_REQUEST)
         new_token = response.json()
         id = request.data.get('id')
         url = f"https://www.wixapis.com/members/v1/members/{id}?fieldSet=FULL"
@@ -317,6 +341,8 @@ class WixCreateMembersViewSet(APIView, WixAuthentication):
 
     def post(self, request):
         response = WixAuthentication.get_wix_authentication(self, refresh_token=request.user.token)
+        if response.status == 400:
+            return Response(response.json().get('payload'), status=status.HTTP_400_BAD_REQUEST)
         new_token = response.json()
         url = "https://www.wixapis.com/members/v1/members"
 
