@@ -598,13 +598,6 @@ class GetToken(WixAuthentication, APIView):
             user_email = User.objects.filter(email=member_data['properties']['email'])
             if user_email.exists():
                 return Response(data={"message": f"This user email {user_email.first().email} is already registered"})
-            user = User.objects.create(email=member_data['properties']['email'], token=refresh_token,
-                                       username=generate_unique_username([
-                                           member_data['properties']['email'],
-                                           'user'
-                                       ]), )
-            user.set_password(password)
-            user.save()
             headers = {
                 'Content-Type': 'application/json'
             }
@@ -615,6 +608,13 @@ class GetToken(WixAuthentication, APIView):
                                  "code": status.HTTP_409_CONFLICT})
             registration_response = response.json()
             if response.status_code == 201:
+                user = User.objects.create(email=member_data['properties']['email'], token=refresh_token,
+                                   username=generate_unique_username([
+                                       member_data['properties']['email'],
+                                       'user'
+                                   ]), )
+                user.set_password(password)
+                user.save()
                 mail_registration(registration_response)
             return Response(registration_response)
         return Response(data={"message": "No token found",
